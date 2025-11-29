@@ -18,7 +18,7 @@ await connectDB()
 await connectCloudinary()
 
 //Allow Multiple Origin 
-const allowedOrigins = ["http://localhost:5173"]
+const allowedOrigins = ["http://localhost:5173","https://green-cart-grocery-hazel.vercel.app"]
 
 //Middleware configuration 
 app.use(express.json())
