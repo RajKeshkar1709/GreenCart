@@ -18,12 +18,32 @@ await connectDB()
 await connectCloudinary()
 
 //Allow Multiple Origin 
-const allowedOrigins = ["http://localhost:5173","https://green-cart-grocery-hazel.vercel.app"]
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://green-cart-grocery-hazel.vercel.app"
+]
 
 //Middleware configuration 
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors({origin:allowedOrigins,credentials:true}))
+
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps, postman, or curl)
+        if (!origin) return callback(null, true);
+        
+        const isAllowed = allowedOrigins.includes(origin) || 
+                          origin.endsWith(".vercel.app") || 
+                          origin.startsWith("http://localhost:");
+                          
+        if (isAllowed) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true
+}))
 
 
 app.get('/',(req,res)=>{res.send("API is Working")})
