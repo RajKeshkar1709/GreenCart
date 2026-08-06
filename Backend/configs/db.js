@@ -7,8 +7,8 @@ const connectDB = async ()=>{
         
     }
     catch(error){
-        console.error(error.message)
-
+        console.error("Database connection failed:", error.message)
+        throw error; // Rethrow to prevent silent failures
     }
 }
 
